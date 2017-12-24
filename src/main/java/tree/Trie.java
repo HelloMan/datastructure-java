@@ -26,8 +26,6 @@ public class Trie implements Comparable<Trie> {
 
     private final boolean root;
 
-
-
     public Trie(char value,Trie parent){
         this.value = value;
 
@@ -98,7 +96,7 @@ public class Trie implements Comparable<Trie> {
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             stream.flatMap(f -> Arrays.stream(f.split(" ")))
                     .map(String::trim)
-                    .filter(w -> WORD_PATTERN.matcher(w).find())
+                    .filter(w -> WORD_PATTERN.matcher(w).matches())
                     .forEach(trie::insert);
         }
 
