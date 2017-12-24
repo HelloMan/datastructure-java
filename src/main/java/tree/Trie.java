@@ -91,7 +91,8 @@ public class Trie implements Comparable<Trie> {
     }
 
     public static void main(String[] args) throws IOException {
-        String fileName = "/Users/chaojun/create.log";
+//        String fileName = "/Users/chaojun/create.log";
+        String fileName = args[0];
 
         final Trie trie = new Trie('/',null);
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
