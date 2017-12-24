@@ -10,22 +10,15 @@ import java.util.stream.Stream;
  * 3. 最后一步，根节点和最后一个节点进行交换，交换后堆根节点按照堆的性质调整。
  * 4. 从前往后输出即为排序好的堆
  */
-public class HeapSort<T extends Comparable<T>> {
-    private final T[] heaps;
+public class HeapSort<T extends Comparable<T>> implements Sort<T> {
+    private final T[] values;
 
     private final boolean desc;
 
-    public HeapSort(T[] heaps, boolean desc){
-        this.heaps = heaps;
+    public HeapSort(T[] values, boolean desc){
+        this.values = values;
         this.desc = desc;
-        int length = heaps.length-1;
-        for (int i=length/2-1;i>=0;i--) {
-            adjust(i, length);
-        }
-        for (int i= length;i>=0;i--) {
-            swap(0, i);
-            adjust(0,i);
-        }
+
 
     }
 
@@ -51,19 +44,17 @@ public class HeapSort<T extends Comparable<T>> {
     }
 
     private boolean compare(int i, int j) {
-        int result = heaps[i].compareTo(heaps[j]);
+        int result = values[i].compareTo(values[j]);
         return desc ? result > 0 : result < 0;
     }
 
     private void swap(int i, int j) {
-        T tmp = heaps[i];
-        heaps[i] = heaps[j];
-        heaps[j] = tmp;
+        T tmp = values[i];
+        values[i] = values[j];
+        values[j] = tmp;
 
     }
-    public T[] getHeaps(){
-        return heaps;
-    }
+
 
 
     private int getLeftChild(int index) {
@@ -78,10 +69,26 @@ public class HeapSort<T extends Comparable<T>> {
 
         Integer[] integers = Stream.of(20, 10, 30, 40, 80, 70, 60, 50).toArray(Integer[]::new);
         HeapSort maxHeap = new HeapSort(integers,false);
-
-        Arrays.stream(maxHeap.getHeaps()).forEach(System.out::println);
+        maxHeap.sort();
+        Arrays.stream(maxHeap.getResults()).forEach(System.out::println);
 
     }
 
 
+    @Override
+    public void sort() {
+        int length = values.length-1;
+        for (int i=length/2-1;i>=0;i--) {
+            adjust(i, length);
+        }
+        for (int i= length;i>=0;i--) {
+            swap(0, i);
+            adjust(0,i);
+        }
+    }
+
+    @Override
+    public T[] getResults() {
+        return values;
+    }
 }
