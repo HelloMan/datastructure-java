@@ -70,7 +70,7 @@ public class HeapSort<T extends Comparable<T>> implements Sort<T> {
         Integer[] integers = Stream.of(20, 10, 30, 40, 80, 70, 60, 50).toArray(Integer[]::new);
         HeapSort maxHeap = new HeapSort(integers,false);
         maxHeap.sort();
-        Arrays.stream(maxHeap.getResults()).forEach(System.out::println);
+        maxHeap.getResults().forEach(System.out::println);
 
     }
 
@@ -88,7 +88,7 @@ public class HeapSort<T extends Comparable<T>> implements Sort<T> {
     }
 
     @Override
-    public T[] getResults() {
-        return values;
+    public Stream<T> getResults() {
+        return Arrays.stream(values);
     }
 }

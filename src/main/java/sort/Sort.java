@@ -1,14 +1,22 @@
 package sort;
 
+import java.util.stream.Stream;
+
 /**
- * Created by chaojun on 17/12/24.
+ * 排序算法
  */
 public interface Sort<T extends Comparable<T>> {
 
-
+    /**
+     * 排序
+     */
     void sort();
 
 
-    T[] getResults();
+    /**
+     * 排序结果流
+     * @return
+     */
+    Stream<T> getResults();
 
 }

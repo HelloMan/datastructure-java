@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Created by chaojun on 17/12/24.
+ * 快速排序实现
  */
 public class QuickSort<T extends Comparable<T>> implements Sort<T> {
 
@@ -64,7 +64,7 @@ public class QuickSort<T extends Comparable<T>> implements Sort<T> {
 
         quickSort.sort();
 
-        Arrays.stream(quickSort.getResults()).forEach(System.out::println);
+        quickSort.getResults().forEach(System.out::println);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class QuickSort<T extends Comparable<T>> implements Sort<T> {
     }
 
     @Override
-    public T[] getResults() {
-        return values;
+    public Stream<T> getResults() {
+        return Arrays.stream(values);
     }
 }
