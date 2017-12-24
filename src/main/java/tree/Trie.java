@@ -36,12 +36,17 @@ public class Trie implements Comparable<Trie> {
     }
 
 
-    public void traverse(Trie node,List<Trie> words){
+    /***
+     * 搜集单词出现次数大于0的
+     * @param node
+     * @param words
+     */
+    public void collect(Trie node, List<Trie> words){
         if (node.count > 0) {
             words.add(node);
         }
 
-        node.children.values().stream().forEach(c -> traverse( c, words));
+        node.children.values().stream().forEach(c -> collect( c, words));
 
     }
 
@@ -88,10 +93,13 @@ public class Trie implements Comparable<Trie> {
         }
     }
 
+    /**
+     * 从某个文件读取单词出现频率出现最高的top 10
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
-//        String fileName = "/Users/chaojun/create.log";
         String fileName = args[0];
-
         final Trie trie = new Trie('/',null);
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             stream.flatMap(f -> Arrays.stream(f.split(" ")))
@@ -100,12 +108,12 @@ public class Trie implements Comparable<Trie> {
                     .forEach(trie::insert);
         }
 
-        final List<Trie> result = new LinkedList<>();
-        trie.traverse(trie, result);
+        final List<Trie> words = new LinkedList<>();
+        trie.collect(trie, words);
 
-        result.sort((o1, o2) -> o2.count - o1.count);
-
-        result.stream().limit(10)
+        words.stream()
+                .sorted((o1, o2) -> o2.count - o1.count)
+                .limit(10)//top 10
                 .forEach(t -> System.out.println("word:" + t.toWord() + "，count:" + t.count));
 
     }
